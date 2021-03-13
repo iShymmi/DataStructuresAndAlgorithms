@@ -6,7 +6,8 @@ public class SelectionSort {
         int[] intArray = {20, 35, -15, 7, 55, 1, -22};
 
         for(int lastUnsortedIndex = intArray.length - 1; lastUnsortedIndex > 0; lastUnsortedIndex--){
-            
+
+            //index of largest element
             int largest = 0;
 
             for(int i = 1 ; i <= lastUnsortedIndex; i++){
@@ -15,6 +16,7 @@ public class SelectionSort {
                 }
             }
 
+            //we are swapping largest item with last item in unsorted partition
             swap(intArray, largest, lastUnsortedIndex);
         }
 
