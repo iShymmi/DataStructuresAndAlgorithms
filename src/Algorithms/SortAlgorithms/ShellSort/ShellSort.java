@@ -6,7 +6,6 @@ public class ShellSort {
         int[] intArray = {20, 35, -15, 7, 55, 1, -22};
 
         for(int gap = intArray.length / 2; gap > 0; gap /= 2){
-
             //Similary implementation as insertion sort
             for(int i = gap; i < intArray.length; i++){
                 int nextElement = intArray[i];
@@ -28,20 +27,13 @@ public class ShellSort {
         }
 
 
-        //Shell Sort variant of Bubble Sort
+        //Shell Sort extension of Bubble Sort
         for (int gap = intArray.length / 2; gap > 0; gap /= 2){
-
-            //while last unsorted index (i) is grater than 0
-            for(int i = intArray.length; i > 0 ; i -= gap){
-                for(int j = gap; j < intArray.length; j++){
-
-                    //swap elemement i with index i - gap
-                    if(intArray[j] < intArray[j - gap]){
-                        swap(intArray, j, j - gap);
-                    }
+            for(int i = gap; i < intArray.length; i ++){
+                for(int j = i; j >= gap && intArray[j - gap] > intArray[j]; j-= gap){
+                    swap(intArray, j - gap, j);
                 }
             }
-
         }
 
         for(int element : intArray){
