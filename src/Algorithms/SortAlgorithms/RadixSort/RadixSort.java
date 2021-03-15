@@ -4,22 +4,28 @@ public class RadixSort {
 
     public static void main(String... args){
         int[] intArray = {4725, 4586, 1330, 8792, 1594, 5729};
+        String[] stringArray = {"bcdef", "dbaqc", "abcde", "omadd", "bbbbb"};
 
         radixSort(intArray, 10, 4);
+
+        radixSort(stringArray, 26, 5);
 
         for(int element: intArray){
             System.out.println(element);
         }
 
+        for(String element: stringArray){
+            System.out.println(element);
+        }
     }
 
     public static void radixSort(int[] input, int radix, int width){
         for(int i = 0; i < width; i++){
-            radixSindleSort(input, i, radix);
+            radixSingleSort(input, i, radix);
         }
     }
 
-    public static void radixSindleSort(int[] input, int position, int radix){
+    public static void radixSingleSort(int[] input, int position, int radix){
 
         int numItems = input.length;
         int[] countArray = new int[radix];
@@ -65,4 +71,54 @@ public class RadixSort {
 
         return value / (int) Math.pow(radix,position) % radix;
     }
+
+
+    public static void radixSort(String[] input, int radix, int width){
+        for(int i = width - 1; i >= 0; i--){
+            radixSingleSort(input, i, radix);
+        }
+    }
+
+    public static void radixSingleSort(String[] input, int position, int radix){
+
+        int numItems = input.length;
+        int[] countArray = new int[radix];
+
+        // for every value we will get digit on the position
+        // for stable version of this algorithms we want to know how many values
+        // have a certain digit in whatever position we're looking at
+        for(String value: input){
+            countArray[getIndex(position, value)]++;
+        }
+
+        // we count the sum how many values have digits less or equal than
+        // for j = 1 how many values we have with that digits are less or equal 1
+        // its adjust the count array
+        for(int j = 1; j < radix ; j++){
+            countArray[j] += countArray[j - 1];
+        }
+
+        // we are going to copy values into temporary array working from right to left
+        // it need to have enought space to keep our items
+        String[] temp = new String[numItems];
+        for(int tempIndex = numItems - 1; tempIndex >= 0; tempIndex--){
+            temp[--countArray[getIndex(position,input[tempIndex])]] = input[tempIndex];
+        }
+
+        //copying values in correct position into original array
+        for(int tempIndex = 0; tempIndex < numItems; tempIndex++){
+            input[tempIndex] = temp[tempIndex];
+        }
+
+    }
+
+    public static int getIndex(int position, String value){
+        // a is 97 in ASCI position so if we want to know the index
+        // of character on the position substract a from the character on the position
+        // It will give us for example if at the position we have a
+        // a - a will give 0, b - a = 1, c - a = 2 ...
+        return value.charAt(position) - 'a';
+    }
+
+
 }

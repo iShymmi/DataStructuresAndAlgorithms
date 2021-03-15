@@ -13,7 +13,7 @@ public class MergeSort {
     }
 
     // {20, 35, -15, 7, 55, 1, -22}
-    public static void mergeSort(int[] input, int start, int end){
+    public static void mergeSort(int[] input, int start, int end, boolean order){
 
         if(end - start < 2){
             return;
@@ -22,24 +22,24 @@ public class MergeSort {
         int mid = (start + end) / 2;
         //partitioning left side of array
         //first run {20, 35, -15}
-        mergeSort(input, start, mid);
+        mergeSort(input, start, mid, order);
 
         //partitioning right side of array
         //first run {7, 55, 1, -22}
-        mergeSort(input, mid, end);
+        mergeSort(input, mid, end, order);
 
-        merge(input, start, mid, end);
+        merge(input, start, mid, end, order);
 
     }
 
-    public static void merge(int[] input, int start, int mid, int end) {
+    public static void merge(int[] input, int start, int mid, int end, boolean order) {
 
         // we are always merging sorted partition
         // mid - 1 is the last element in the left partition
         // input mid is the first element of right partition
         // so if mid - 1 is less than mid the elements are in the right order
         // and we have nothing to do here
-        if( input[mid -1] <= input[mid]){
+        if( input[ order ? mid - 1 : mid] <= input[order ? mid : mid - 1]){
             return;
         }
 
@@ -59,7 +59,7 @@ public class MergeSort {
             // input[i] <= input[j] - if element of index i is less or equal to element of index[j]
             // we put input[i++] on current position and then increment i to point next position
             // otherwise we put input[j++] on current position and then increment i to point next position
-            temp[tempIndex++] = input[i] <= input[j] ? input[i++] : input[j++];
+            temp[tempIndex++] = input[order ? i : j] <= input[order ? j : i] ? input[i++] : input[j++];
         }
 
         // if there are leftover elements in the left partition we need to write them to input array
@@ -73,8 +73,34 @@ public class MergeSort {
         System.arraycopy(temp, 0, input, start, tempIndex);
     }
 
+    /*public static void mergeDescending(int[] input, int start, int mid, int end){
+
+        if( input[mid - 1] >= input[mid]){
+            return;
+        }
+
+        int i = start;
+        int j = mid;
+        int tempIndex = 0;
+
+        int[] temp = new int[end - start];
+
+        while (i < mid && j < end){
+            temp[tempIndex++] = input[i] >= input[j] ? input[i++] : input[j++];
+
+        }
+
+        System.arraycopy(input, i, input, start + tempIndex, mid - i);
+
+        System.arraycopy(temp, 0, input, start, tempIndex);
+    }*/
+
     //Wrap to use only one argument to sort whole array
+    public static void mergeWrap(int[] input, boolean order){
+        mergeSort(input,0,input.length, order);
+    }
+
     public static void mergeWrap(int[] input){
-        mergeSort(input,0,input.length);
+        mergeSort(input,0,input.length, true);
     }
 }
