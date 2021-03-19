@@ -1,4 +1,4 @@
-package DataStructures.LinkedList;
+package DataStructures.LinkedList.SinglyLinkedList;
 
 import DataStructures.ArrayList.Employee;
 
