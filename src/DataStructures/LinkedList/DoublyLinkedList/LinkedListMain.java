@@ -34,5 +34,13 @@ public class LinkedListMain {
         list.removeFromEnd();
         list.printList();
         System.out.println(list.getSize());
+
+        list.addBefore(billEnd,janNowak);
+        list.printList();
+        System.out.println(list.getSize());
+
+        list.addBefore(new Employee("Someone","Else", 123),johnSmith);
+        list.printList();
+        System.out.println(list.getSize());
     }
 }

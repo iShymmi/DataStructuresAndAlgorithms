@@ -36,6 +36,37 @@ public class EmployeeDoublyLinkedList {
         size++;
     }
 
+    public boolean addBefore(Employee newEmployee, Employee existingEmployee){
+        EmployeeNode node = head;
+
+        if(head == null){
+            return false;
+        }
+
+        while(node.getNext() != null && !node.getEmployee().equals(existingEmployee)){
+            node = node.getNext();
+        }
+
+        if(node == null){
+            return false;
+        }
+
+        EmployeeNode newEmployeeNode = new EmployeeNode(newEmployee);
+        newEmployeeNode.setPrevious(node.getPrevious());
+        newEmployeeNode.setNext(node);
+        node.setPrevious(newEmployeeNode);
+
+        if(head == node){
+            head = newEmployeeNode;
+        }else {
+            newEmployeeNode.getPrevious().setNext(newEmployeeNode);
+        }
+
+        size++;
+
+        return true;
+    }
+
     public EmployeeNode removeFromFront(){
         if(isEmpty()){
             return null;
