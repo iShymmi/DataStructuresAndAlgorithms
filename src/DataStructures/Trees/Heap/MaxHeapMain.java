@@ -17,7 +17,11 @@ public class MaxHeapMain {
         heap.printHeap();
 
         //heap.delete(0);
-        System.out.println(heap.peek());
+        //System.out.println(heap.peek());
+        heap.printHeap();
+
+        heap.sort();
+
         heap.printHeap();
     }
 }

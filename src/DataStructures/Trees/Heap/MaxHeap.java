@@ -52,6 +52,19 @@ public class MaxHeap {
         return heap[0];
     }
 
+    //Sorting heap
+    //! We can't use heap after sorting as Heap ! It's not longer a heap
+    public void sort(){
+        int lastHeapIndex = size - 1;
+        for(int i = 0; i < lastHeapIndex; i++){
+            int tmp = heap[0];
+            heap[0] = heap[lastHeapIndex - i];
+            heap[lastHeapIndex - i] = tmp;
+
+            fixHeapBelow(0, lastHeapIndex - i - 1);
+        }
+    }
+
     private void fixHeapBelow(int index, int lastHeapIndex){
         int childToSwap;
 
